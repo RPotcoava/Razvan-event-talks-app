@@ -1,0 +1,46 @@
+{
+  "talks": [
+    {
+      "title": "The Future of JavaScript Frameworks",
+      "speakers": ["Alice Johnson"],
+      "category": ["JavaScript", "Frontend", "WebDev"],
+      "duration": 60,
+      "description": "A deep dive into the evolving landscape of JavaScript frameworks, and what to expect in the next 5 years."
+    },
+    {
+      "title": "Building Scalable APIs with Node.js",
+      "speakers": ["Bob Williams", "Charlie Brown"],
+      "category": ["Node.js", "Backend", "API"],
+      "duration": 60,
+      "description": "Learn how to design and build APIs that can handle millions of requests, using the latest Node.js features."
+    },
+    {
+      "title": "CSS Grid and Flexbox: A Love Story",
+      "speakers": ["Diana Prince"],
+      "category": ["CSS", "Frontend", "Design"],
+      "duration": 60,
+      "description": "Master the art of layout with CSS Grid and Flexbox. We'll explore practical examples and advanced techniques."
+    },
+    {
+      "title": "Securing Your Web Applications",
+      "speakers": ["Eve Adams"],
+      "category": ["Security", "WebDev"],
+      "duration": 60,
+      "description": "An overview of common web vulnerabilities and how to prevent them. We'll cover everything from XSS to CSRF."
+    },
+    {
+      "title": "Introduction to Machine Learning with TensorFlow.js",
+      "speakers": ["Frank Castle", "Grace Hopper"],
+      "category": ["Machine Learning", "JavaScript", "TensorFlow"],
+      "duration": 60,
+      "description": "Bring the power of machine learning to the browser with TensorFlow.js. No Python required!"
+    },
+    {
+      "title": "The Power of Serverless Functions",
+      "speakers": ["Heidi Klum"],
+      "category": ["Serverless", "Cloud", "Backend"],
+      "duration": 60,
+      "description": "Discover how serverless functions can simplify your architecture, reduce costs, and improve scalability."
+    }
+  ]
+}

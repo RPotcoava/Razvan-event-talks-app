@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tech Talks Today</title>
+<style>body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    background: #f4f4f4;
+    color: #333;
+}
+
+.container {
+    max-width: 960px;
+    margin: 20px auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+header h1 {
+    margin: 0 0 10px 0;
+    font-size: 2.5em;
+}
+
+.search-container {
+    margin-top: 20px;
+}
+
+#searchInput {
+    width: 50%;
+    padding: 10px;
+    font-size: 1em;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+}
+
+.schedule-item {
+    border-bottom: 1px solid #eee;
+    padding: 20px 0;
+}
+
+.schedule-item:last-child {
+    border-bottom: none;
+}
+
+.schedule-item.break {
+    background-color: #f0f8ff;
+    text-align: center;
+    font-weight: bold;
+}
+
+.schedule-item .time {
+    font-weight: bold;
+    color: #007bff;
+    width: 120px;
+    float: left;
+}
+
+.schedule-item .details {
+    margin-left: 140px;
+}
+
+.schedule-item h2 {
+    margin: 0 0 10px 0;
+    font-size: 1.5em;
+}
+
+.schedule-item .speakers {
+    font-style: italic;
+    color: #555;
+    margin-bottom: 10px;
+}
+
+.schedule-item .category span {
+    display: inline-block;
+    background: #007bff;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 15px;
+    font-size: 0.8em;
+    margin-right: 5px;
+}
+</style></head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Tech Talks Today</h1>
+            <p>A 1-day event filled with technical talks.</p>
+            <div class="search-container">
+                <input type="text" id="searchInput" placeholder="Search by category...">
+            </div>
+        </header>
+        <main id="schedule">
+            <!-- Schedule will be rendered here by JavaScript -->
+        </main>
+    </div>
+<script>document.addEventListener('DOMContentLoaded', () => {
+    const scheduleContainer = document.getElementById('schedule');
+    const searchInput = document.getElementById('searchInput');
+
+    const talksData = {
+  "talks": [
+    {
+      "title": "The Future of JavaScript Frameworks",
+      "speakers": ["Alice Johnson"],
+      "category": ["JavaScript", "Frontend", "WebDev"],
+      "duration": 60,
+      "description": "A deep dive into the evolving landscape of JavaScript frameworks, and what to expect in the next 5 years."
+    },
+    {
+      "title": "Building Scalable APIs with Node.js",
+      "speakers": ["Bob Williams", "Charlie Brown"],
+      "category": ["Node.js", "Backend", "API"],
+      "duration": 60,
+      "description": "Learn how to design and build APIs that can handle millions of requests, using the latest Node.js features."
+    },
+    {
+      "title": "CSS Grid and Flexbox: A Love Story",
+      "speakers": ["Diana Prince"],
+      "category": ["CSS", "Frontend", "Design"],
+      "duration": 60,
+      "description": "Master the art of layout with CSS Grid and Flexbox. We'll explore practical examples and advanced techniques."
+    },
+    {
+      "title": "Securing Your Web Applications",
+      "speakers": ["Eve Adams"],
+      "category": ["Security", "WebDev"],
+      "duration": 60,
+      "description": "An overview of common web vulnerabilities and how to prevent them. We'll cover everything from XSS to CSRF."
+    },
+    {
+      "title": "Introduction to Machine Learning with TensorFlow.js",
+      "speakers": ["Frank Castle", "Grace Hopper"],
+      "category": ["Machine Learning", "JavaScript", "TensorFlow"],
+      "duration": 60,
+      "description": "Bring the power of machine learning to the browser with TensorFlow.js. No Python required!"
+    },
+    {
+      "title": "The Power of Serverless Functions",
+      "speakers": ["Heidi Klum"],
+      "category": ["Serverless", "Cloud", "Backend"],
+      "duration": 60,
+      "description": "Discover how serverless functions can simplify your architecture, reduce costs, and improve scalability."
+    }
+  ]
+}
+;
+
+    const generateSchedule = (talks) => {
+        const schedule = [];
+        let currentTime = new Date('2024-01-01T10:00:00');
+
+        const formatTime = (date) => {
+            return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false });
+        };
+
+        talks.forEach((talk, index) => {
+            if (index === 3) {
+                schedule.push({
+                    type: 'break',
+                    title: 'Lunch Break',
+                    startTime: formatTime(currentTime),
+                    endTime: formatTime(new Date(currentTime.getTime() + 60 * 60 * 1000)),
+                });
+                currentTime.setMinutes(currentTime.getMinutes() + 60);
+            }
+
+            schedule.push({
+                type: 'talk',
+                startTime: formatTime(currentTime),
+                ...talk,
+                endTime: formatTime(new Date(currentTime.getTime() + talk.duration * 60 * 1000)),
+            });
+
+            currentTime.setMinutes(currentTime.getMinutes() + talk.duration + 10);
+        });
+
+        return schedule;
+    };
+
+    const renderSchedule = (schedule) => {
+        scheduleContainer.innerHTML = '';
+        schedule.forEach(item => {
+            const itemDiv = document.createElement('div');
+            itemDiv.classList.add('schedule-item');
+
+            if (item.type === 'break') {
+                itemDiv.classList.add('break');
+                itemDiv.innerHTML = `
+                    <div class="time">${item.startTime} - ${item.endTime}</div>
+                    <div class="details">
+                        <h2>${item.title}</h2>
+                    </div>
+                `;
+            } else {
+                itemDiv.innerHTML = `
+                    <div class="time">${item.startTime} - ${item.endTime}</div>
+                    <div class="details">
+                        <h2>${item.title}</h2>
+                        <div class="speakers">${item.speakers.join(', ')}</div>
+                        <p>${item.description}</p>
+                        <div class="category">
+                            ${item.category.map(cat => `<span>${cat}</span>`).join('')}
+                        </div>
+                    </div>
+                `;
+            }
+            scheduleContainer.appendChild(itemDiv);
+        });
+    };
+
+    const filterTalks = (query) => {
+        const filteredTalks = talksData.talks.filter(talk => {
+            return talk.category.some(cat => cat.toLowerCase().includes(query.toLowerCase()));
+        });
+        const schedule = generateSchedule(filteredTalks);
+        renderSchedule(schedule);
+    };
+
+    searchInput.addEventListener('input', (e) => {
+        filterTalks(e.target.value);
+    });
+
+    // Initial render
+    const initialSchedule = generateSchedule(talksData.talks);
+    renderSchedule(initialSchedule);
+});
+</script></body>
+</html>
